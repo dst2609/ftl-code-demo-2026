@@ -30,4 +30,4 @@ This repository is licensed under the MIT License. See the LICENSE file for more
 
 ## Contact
 
-Devarsh Thaker - devarsh.thaker.site@codepath.org
+Devarsh Thaker - devarsh.thaker@codepath.org
