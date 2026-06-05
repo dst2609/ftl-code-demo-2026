@@ -1,0 +1,88 @@
+/* Basic page styling */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f1f8f4;
+  color: #1f3d2b;
+}
+
+/* Header section */
+.hero {
+  text-align: center;
+  padding: 50px 20px;
+  background: #b7e4c7;
+}
+
+.hero h1 {
+  margin-bottom: 10px;
+  font-size: 42px;
+}
+
+.button {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 12px 18px;
+  background: #2d6a4f;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+}
+
+/* Content sections */
+main {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+.example-box {
+  background: white;
+  padding: 24px;
+  margin-bottom: 24px;
+  border-radius: 12px;
+}
+
+/* src image example */
+.earth-image {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 12px;
+}
+
+/* Flexbox parent container */
+.cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+
+/* Flexbox children */
+.card {
+  width: 220px;
+  padding: 20px;
+  background: #d8f3dc;
+  border-radius: 10px;
+  text-align: center;
+}
+
+/* Media Query */
+/* This rule only runs when the screen is 600px wide or smaller */
+@media screen and (max-width: 600px) {
+  .hero {
+    background: #95d5b2;
+  }
+
+  .hero h1 {
+    font-size: 32px;
+  }
+
+  .cards {
+    flex-direction: column;
+  }
+
+  .card {
+    width: auto;
+  }
+}
