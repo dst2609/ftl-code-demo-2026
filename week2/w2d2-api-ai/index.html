@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Course Catalog — TL;DR Demo</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Course Catalog</h1>
+
+      <article class="course">
+        <h2 id="course-title">
+          CS 240: Computer Architecture and Assembly Language
+        </h2>
+        <p id="course-description">
+          An introduction to computer architecture, including binary
+          representation, digital logic, processor organization, memory
+          hierarchy, and instruction-level parallelism. Students will write
+          programs in assembly language to develop a practical understanding of
+          how high-level code is translated into machine instructions. Topics
+          include cache design, pipelining, and an introduction to operating
+          system concepts such as virtual memory and process scheduling.
+          Prerequisite: CS 230 with a grade of C or better.
+        </p>
+
+        <button id="tldr-btn">TL;DR</button>
+        <div id="tldr-output"></div>
+      </article>
+    </main>
+
+    <!-- secrets.js is gitignored — you'll create it during the demo -->
+    <script src="secrets.js"></script>
+    <script src="scripts.js"></script>
+  </body>
+</html>
