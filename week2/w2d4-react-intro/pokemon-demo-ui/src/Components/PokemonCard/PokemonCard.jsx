@@ -1,13 +1,14 @@
-const PokemonCard = () => {
+const PokemonCard = (props) => {
   //this is where you JS goes
   return (
-    <div>
-      <h2>Pikachu</h2>
-      <img
-        src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"
-        alt="Pikachu"
-      />
-    </div>
+    <fieldset>
+      <legend>PokemonCard.jsx</legend>
+      <div>
+        <h2>{props.name}</h2>
+        <img src={props.image} alt={props.name} />
+        <h5>Type: {props.type}</h5>
+      </div>
+    </fieldset>
   );
 };
 
