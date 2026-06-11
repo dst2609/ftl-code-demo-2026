@@ -1,3 +1,4 @@
+import Header from "./Components/Header/Header.jsx";
 import PokemonCard from "./Components/PokemonCard/PokemonCard.jsx";
 
 const App = () => {
@@ -29,7 +30,7 @@ const App = () => {
     <fieldset>
       <legend>App.jsx</legend>
       <div>
-        <h1>App</h1>
+        <Header />
         {pokemonList.map((pokemon) => {
           return (
             <PokemonCard
