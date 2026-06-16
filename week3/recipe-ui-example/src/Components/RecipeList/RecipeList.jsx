@@ -9,7 +9,7 @@ const RECIPES_URL =
 const RECIPE_DETAILS_URL =
   "https://www.themealdb.com/api/json/v1/1/lookup.php?i=";
 
-const RecipeList = () => {
+const RecipeList = ({ searchTerm }) => {
   //useState variable to store response and store selected recipe
   const [recipes, setRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
@@ -23,17 +23,29 @@ const RecipeList = () => {
     fetchRecipes();
   }, []);
 
+  //handleRecipeClick on Card
   const handleRecipeClick = async (recipeId) => {
     const response = await axios.get(`${RECIPE_DETAILS_URL}${recipeId}`);
 
     setSelectedRecipe(response.data.meals[0]);
   };
 
+  //filterdRecipe if the searchTerm is not empty
+  const filteredRecipes = recipes.filter((recipe) =>
+    recipe.strMeal.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
+
   return (
     <section>
       <h2>Recipes</h2>
-      <div className="recipe-container">
-        {recipes.map((recipe) => (
+      <div
+        className={
+          filteredRecipes.length === 1
+            ? "recipe-container single-recipe"
+            : "recipe-container"
+        }
+      >
+        {filteredRecipes.map((recipe) => (
           <RecipeCard
             key={recipe.idMeal}
             recipe={recipe}
