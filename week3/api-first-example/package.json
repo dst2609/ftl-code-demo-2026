@@ -1,0 +1,17 @@
+{
+  "name": "api-first-example",
+  "version": "1.0.0",
+  "description": "This is an in class example for the first server side / api project",
+  "license": "MIT",
+  "author": "Devarsh Thaker + FTL 2026",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
+  }
+}
