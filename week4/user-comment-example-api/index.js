@@ -5,7 +5,7 @@ const express = require("express");
 const morgan = require("morgan"); // do not need this
 
 const userRoutes = require("./routes/userRoute");
-
+const commentRoutes = require("./routes/commentRoute");
 const app = express();
 const PORT = process.env.PORT;
 
@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/users", userRoutes);
-// app.use("/comments", ()=>{})
+app.use("/comments", commentRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost::${PORT}`);
