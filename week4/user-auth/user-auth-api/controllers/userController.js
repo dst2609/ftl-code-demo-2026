@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-// const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
@@ -15,6 +15,11 @@ const register = async (req, res) => {
   }
 
   //password length check here
+  if (password.length < 8) {
+    return res
+      .status(400)
+      .json({ error: "Password must be at least 8 characters" });
+  }
   try {
     const existing = await prisma.user.findFirst({
       where: { OR: [{ email }, { username }] },
@@ -40,4 +45,45 @@ const register = async (req, res) => {
   }
 };
 
-module.exports = { register };
+const login = async (req, res) => {
+  //we need email and password from the req.body
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ error: "email and password are required!" });
+  }
+
+  try {
+    // check if the user with that emailexists in the db.
+    // if exists, compare the password
+    // if correct - login successful, if incorrect password- login failed.
+    const user = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (user) {
+      const correctPassword = await bcrypt.compare(password, user.password); //the first password is the current inputted password, second is from db
+      if (correctPassword) {
+        //successful login
+        // jwt needds payload and JWT secret jwt,sign(payload, secret, [options])
+        const token = jwt.sign(
+          { userId: user.id, username: user.username, email: user.email },
+          process.env.JWT_SECRET,
+          { expiresIn: process.env.JWT_EXPIRES_IN },
+        );
+
+        res.status(200).json({ token });
+      } else {
+        //wrong password
+        res.status(401).json({ error: "Invalid credentials!" });
+      }
+    } else {
+      res.status(404).json({ error: "User with that email not found" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+module.exports = { register, login };
