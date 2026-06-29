@@ -62,16 +62,17 @@ const login = async (req, res) => {
     });
 
     if (user) {
+      //user info is from the DB
       const correctPassword = await bcrypt.compare(password, user.password); //the first password is the current inputted password, second is from db
       if (correctPassword) {
         //successful login
-        // jwt needds payload and JWT secret jwt,sign(payload, secret, [options])
+        // jwt needds payload and JWT secret jwt.sign(payload, secret, [options])
         const token = jwt.sign(
           { userId: user.id, username: user.username, email: user.email },
           process.env.JWT_SECRET,
           { expiresIn: process.env.JWT_EXPIRES_IN },
         );
-
+        // res.status(200).json({ user });
         res.status(200).json({ token });
       } else {
         //wrong password
