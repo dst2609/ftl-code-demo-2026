@@ -29,8 +29,9 @@ const Register = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="container" onSubmit={handleSubmit}>
       <h2> Create Account</h2>
+      {error && <p className="error">{error}</p>}
       <label>Email</label>
       <input
         type="email"
@@ -56,7 +57,9 @@ const Register = () => {
         minLength={8}
         required
       />
-      <button type="submit">Register</button>
+      <button type="submit" disabled={loading}>
+        {loading ? "Creating..." : "Register"}
+      </button>
     </form>
   );
 };

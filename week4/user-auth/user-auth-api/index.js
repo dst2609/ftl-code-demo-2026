@@ -8,7 +8,7 @@ const userRoutes = require("./routes/userRoutes");
 const app = express(); //Middleware
 
 app.use(morgan("dev"));
-app.use(cors({ origin: "http://localhost:5173" }));
+app.use(cors({ origin: "https://user-auth-unit5-ui.onrender.com" }));
 app.use(express.json());
 
 app.get("/", (req, res) => {
