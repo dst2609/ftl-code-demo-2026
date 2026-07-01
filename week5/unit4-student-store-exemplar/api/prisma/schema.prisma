@@ -1,0 +1,81 @@
+// Prisma schema for the College of CodePath Student Store.
+//
+// This file is the single source of truth for the database structure. It is
+// derived directly from the "Data Models" section of planning.md. After
+// editing it, run a migration to apply the changes to PostgreSQL:
+//
+//   npx prisma migrate dev --name <descriptive_name>
+//
+// Docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// A registered customer of the store. Auth (login/signup) is layered on top of
+// this model. Orders reference the user who placed them via `customer_id`.
+model User {
+  id         Int      @id @default(autoincrement())
+  name       String
+  email      String   @unique
+  password   String
+  is_admin   Boolean  @default(false)
+  created_at DateTime @default(now())
+
+  orders Order[]
+}
+
+// An individual item available for purchase in the store.
+model Product {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String
+  // Price is stored in cents as an integer to avoid floating-point rounding
+  // errors with currency. See the Decisions Log in planning.md.
+  price       Int
+  image_url   String?
+  category    String  @default("misc")
+
+  // Back-relation: every OrderItem that references this product.
+  // Deleting a Product cascades to those OrderItems (see OrderItem below).
+  orderItems OrderItem[]
+}
+
+// A customer order. Holds order-level metadata; the line items live in
+// OrderItem.
+model Order {
+  order_id    Int      @id @default(autoincrement())
+  customer_id Int
+  total_price Int      @default(0)
+  status      String   @default("pending")
+  created_at  DateTime @default(now())
+
+  customer User        @relation(fields: [customer_id], references: [id])
+  // Back-relation: the line items belonging to this order.
+  // Deleting an Order cascades to its OrderItems (see OrderItem below).
+  orderItems OrderItem[]
+}
+
+// A single line item within an order. OrderItem sits at the intersection of the
+// Order <-> Product relationship: it links one product to one order and records
+// the quantity purchased and the price at the time of purchase.
+model OrderItem {
+  order_item_id Int @id @default(autoincrement())
+  order_id      Int
+  product_id    Int
+  quantity      Int @default(1)
+  // Price per unit captured at purchase time (in cents). Copied from the
+  // product so historical orders keep their original price even if the
+  // product's price later changes.
+  price         Int
+
+  // Cascade deletes: removing either the parent Order OR the referenced
+  // Product automatically removes this line item.
+  order   Order   @relation(fields: [order_id], references: [order_id], onDelete: Cascade)
+  product Product @relation(fields: [product_id], references: [id], onDelete: Cascade)
+}

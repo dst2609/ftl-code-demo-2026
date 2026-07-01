@@ -1,0 +1,42 @@
+{
+  "name": "student-store-api",
+  "version": "1.0.0",
+  "description": "Backend API and Prisma-managed database for the College of CodePath Student Store.",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "dev": "nodemon server.js",
+    "migrate": "prisma migrate dev",
+    "generate": "prisma generate",
+    "studio": "prisma studio",
+    "seed": "node prisma/seed.js"
+  },
+  "prisma": {
+    "seed": "nodemon prisma/seed.js"
+  },
+  "keywords": [
+    "prisma",
+    "express",
+    "postgres",
+    "student-store"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^6.7.0",
+    "bcrypt": "^5.1.1",
+    "colors": "^1.4.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14",
+    "prisma": "^6.7.0"
+  },
+  "engines": {
+    "node": ">=18.16.0"
+  }
+}
